@@ -1,17 +1,18 @@
 const siteData = {
-  title: 'Starter Notion blog for Nextjs with Tailwind',
-  author: 'Notion Blog Starter',
-  headerTitle: 'Nextjs Notion Blog Starter',
-  profileUrl: '/nextjs-logo.png',
-  headerDescription: 'Starter Notion blog for Nextjs with Tailwind',
-  footerText: '© All rights reserved',
-  language: 'en-us',
-  locale: 'en-US',
+  title: 'Portifólio Phill Nascimento',
+  author: 'Phill Nascimento',
+  headerTitle: 'Phill Nascimento',
+  profileUrl: '/phillLogo.png',
+  headerDescription: 'Phill Nascimento',
+  footerText: '© All rights reserved for Phill Nascimento',
+  language: 'pt-br',
+  locale: 'pt-BR',
   ogBanner: 'https://nextjs-notion-blog-starter.vercel.app/preview/1.jpg',
-  github: 'https://github.com/tuanphungcz/nextjs-notion-blog-starter',
-  twitter: 'https://github.com/tuanphungcz/nextjs-notion-blog-starter',
+  github: 'https://www.linkedin.com/in/phill-nascimento/',
+  twitter: 'https://www.linkedin.com/in/phill-nascimento/',
   websiteUrl: 'https://nextjs-notion-blog-starter.vercel.app',
-  linkedin: 'https://github.com/tuanphungcz/nextjs-notion-blog-starter'
+  linkedin: 'https://www.linkedin.com/in/phill-nascimento/',
+  whatsapp: 'https://wa.me/5531983073477?text=Oi%20Phill%2C%20meu%20nome%20%C3%A9'
 };
 
 export default siteData;

@@ -6,6 +6,8 @@ import { Fragment, useState } from 'react';
 import { filterArticles } from 'utils/filterArticles';
 import Category from 'components/Category';
 import ArticleCard from 'components/ArticleCard';
+import AboutSection from 'components/AboutSection';
+import ContactForm from 'components/ContactForm';
 
 export default function Index(props) {
   const { articles, categories } = props;
@@ -16,28 +18,36 @@ export default function Index(props) {
   return (
     <Layout>
       <HeroHeader />
-      <div className="flex flex-wrap justify-center gap-4 mt-8">
-        {categories.map(tag => (
-          <Category
-            tag={tag}
-            key={tag}
-            selectedTag={selectedTag}
-            setSelectedTag={setSelectedTag}
-          />
-        ))}
-      </div>
-      <Container>
+      <section id="about">
+        <AboutSection />
+      </section>
+
+      <section id="projects" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap justify-center my-8 text-3xl font-bold text-gray-900">
+          {!selectedTag ? 'Meus Projetos' : `${selectedTag} articles`}
+        </div>
+        <div className="flex flex-wrap justify-center gap-4 mt-8">
+          {categories.map(tag => (
+            <Category
+              tag={tag}
+              key={tag}
+              selectedTag={selectedTag}
+              setSelectedTag={setSelectedTag}
+            />
+          ))}
+        </div>
         <div className="py-8">
-          <div className="my-8 text-3xl font-bold text-gray-900">
-            {!selectedTag ? 'Latest articles' : `${selectedTag} articles`}
-          </div>
           <div className="grid gap-10 lg:gap-12 sm:grid-cols-2">
             {filteredArticles.map(article => (
               <ArticleCard article={article} key={article.id} />
             ))}
           </div>
         </div>
-      </Container>
+      </section>
+
+      <section id="contact">
+        <ContactForm />
+      </section>
     </Layout>
   );
 }

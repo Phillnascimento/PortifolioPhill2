@@ -49,4 +49,4 @@ export const useConfetti = () => {
     getInstance,
     fire
   };
-};
+}
