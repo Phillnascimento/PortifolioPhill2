@@ -9,18 +9,16 @@ type ArticleImageSectionProps = {
 const ArticleImageSection: React.FC<ArticleImageSectionProps> = ({ thumbnail }) => {
   return (
     <Container>
-      <div className="max-w-5xl px-6 mx-auto my-16 md:px-8">
-        <div className="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
-          <Image
-            className="absolute top-0 left-0 w-full h-full object-cover rounded-lg"
-            src={thumbnail}
-            placeholder="blur"
-            blurDataURL={thumbnail}
-            layout="fill"
-            alt={'article cover'}
-            priority
-          />
-        </div>
+      <div className="relative w-full h-[50vh] overflow-hidden">
+        <Image
+          className="absolute inset-0 object-cover w-full h-full"
+          src={thumbnail}
+          placeholder="blur"
+          blurDataURL={thumbnail}
+          layout="fill"
+          alt="article cover"
+          priority
+        />
       </div>
     </Container>
   );

@@ -21,18 +21,20 @@ export default function Socials() {
         <a
           key={item.name}
           href={item.href}
-          className="text-gray-400 transform hover:text-[#333] filter hover:contrast-0 transition-colors duration-300"
+          className="text-gray-400 transform hover:text-[#333] transition-colors duration-300"
           target="_blank"
           rel="noreferrer"
         >
           <span className="sr-only">{item.name}</span>
-          <Image
-            src={item.icon}
-            alt={`${item.name} icon`}
-            width={24}
-            height={24}
-            objectFit="cover"
-          />
+          <div className="relative w-6 h-6">
+            <Image
+              src={item.icon}
+              alt={`${item.name} icon`}
+              layout="fill"
+              objectFit="contain"
+              className="filter hover:contrast-0"
+            />
+          </div>
         </a>
       ))}
     </div>

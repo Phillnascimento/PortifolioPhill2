@@ -8,12 +8,14 @@ import Category from 'components/Category';
 import ArticleCard from 'components/ArticleCard';
 import AboutSection from 'components/AboutSection';
 import ContactForm from 'components/ContactForm';
+import dynamic from 'next/dynamic';
 
 export default function Index(props) {
   const { articles, categories } = props;
 
   const [selectedTag, setSelectedTag] = useState<string>(null);
   const filteredArticles = filterArticles(articles, selectedTag);
+  const HeroHeader = dynamic(() => import('components/HeroHeader'), {ssr:false})
 
   const handleSubmit = (data: { email: string; subject: string; message: string }) => {
     // Lógica para enviar o formulário
@@ -27,7 +29,7 @@ export default function Index(props) {
         <AboutSection />
       </section>
 
-      <section id="projects" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="projects" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-0">
         <div className="flex flex-wrap justify-center my-8 text-3xl font-bold text-gray-900">
           {!selectedTag ? 'Meus Projetos' : `${selectedTag} articles`}
         </div>
@@ -50,9 +52,7 @@ export default function Index(props) {
         </div>
       </section>
 
-      <section id="contact">
-        <ContactForm onSubmit={handleSubmit} />
-      </section>
+
     </Layout>
   );
 }

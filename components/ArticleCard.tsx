@@ -10,7 +10,7 @@ export default function ArticleCard({ article }: Props) {
   const slug = slugify(article.title).toLowerCase();
 
   return (
-    <a href={`/blog/${slug}`} className="block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mx-auto max-w-[1200px]">
+    <a href={`/blog/${slug}`} className="block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mx-auto max-w-[1200px] lg:px-0">
       <div className="relative w-full pt-[75%]">
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-50"></div>
         <Image

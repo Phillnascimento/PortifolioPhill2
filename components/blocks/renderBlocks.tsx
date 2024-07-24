@@ -80,18 +80,18 @@ export function renderBlocks(block) {
       const src = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption.length >= 1 ? value.caption[0].plain_text : '';
       return (
-        <figure className="mt-0">
-          <Image
-            className="rounded-lg aspect-video"
-            objectFit="cover"
-            src={src}
-            placeholder="blur"
-            blurDataURL={src}
-            width={1200}
-            height={684}
-            alt={caption ? caption : 'A visual depiction of what is being written about'}
-          />
-          {caption && <figcaption className="text-center">{caption}</figcaption>}
+        <figure className="my-8">
+          <div className="relative w-full h-96 md:h-[680px] overflow-hidden rounded-lg">
+            <Image
+              className="object-cover w-full h-full rounded-lg"
+              src={src}
+              placeholder="blur"
+              blurDataURL={src}
+              layout="fill"
+              alt={caption ? caption : 'A visual depiction of what is being written about'}
+            />
+          </div>
+          {caption && <figcaption className="text-center mt-2">{caption}</figcaption>}
         </figure>
       );
     case 'code':

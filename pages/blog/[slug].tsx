@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
 import { getAllArticles, getArticlePage, getArticlePageData } from 'utils/notion';
 import { Layout } from 'layouts/Layout';
 import Image from 'next/image';
@@ -50,7 +49,7 @@ const ArticlePage = ({
         <ArticleImageSection thumbnail={thumbnail} />
 
         <Container>
-          <div className="max-w-4xl mx-auto mb-24 space-y-8">
+          <div className="max-w-3xl mx-auto mb-16 space-y-10">
             {content.map(block => (
               <Fragment key={block.id}>{renderBlocks(block)}</Fragment>
             ))}
