@@ -6,6 +6,7 @@
   "author": "Tuan Phung <tuan@phung.cz>",
   "license": "MIT",
   "scripts": {
+    
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

@@ -2,10 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-/* styles/globals.css */
-img {
-    object-fit: cover;
-    width: 100%;
-    height: auto;
-    border-radius: 8px; /* Para bordas arredondadas, se desejar */
-  }

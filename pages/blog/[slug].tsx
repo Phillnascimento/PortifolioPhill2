@@ -68,35 +68,58 @@ const ArticlePage = ({
 };
 
 export const getStaticPaths = async () => {
-  const paths = [];
-  const data: any = await getAllArticles(process.env.BLOG_DATABASE_ID);
+  try {
+    const data = await getAllArticles(process.env.BLOG_DATABASE_ID);
 
-  data.forEach(result => {
-    if (result.object === 'page') {
-      paths.push({
-        params: {
-          slug: slugify(result.properties.title.title[0].plain_text).toLowerCase()
+    const paths = data.map(result => {
+      if (result.object === 'page' && 'properties' in result) {
+        const titleProperty = result.properties['title'];
+        
+        if (titleProperty?.type === 'title' && titleProperty.title.length > 0) {
+          return {
+            params: {
+              slug: slugify(titleProperty.title[0].plain_text).toLowerCase()
+            }
+          };
         }
-      });
-    }
-  });
+      }
+      return null;
+    }).filter(Boolean);
 
-  return {
-    paths,
-    fallback: 'blocking'
-  };
+    return {
+      paths,
+      fallback: 'blocking'
+    };
+  } catch (error) {
+    console.error('Error in getStaticPaths:', error);
+    return {
+      paths: [],
+      fallback: 'blocking'
+    };
+  }
 };
 
+
 export const getStaticProps = async ({ params: { slug } }) => {
-  const data = await getAllArticles(process.env.BLOG_DATABASE_ID);
+  try {
+    const data = await getAllArticles(process.env.BLOG_DATABASE_ID);
 
-  const page = getArticlePage(data, slug);
-  const result = await getArticlePageData(page, slug, process.env.BLOG_DATABASE_ID);
+    const page = getArticlePage(data, slug);
 
-  return {
-    props: result,
-    revalidate: 60 * 60
-  };
+    if (!page) {
+      return { notFound: true };
+    }
+
+    const result = await getArticlePageData(page, slug, process.env.BLOG_DATABASE_ID);
+
+    return {
+      props: result,
+      revalidate: 60 * 60
+    };
+  } catch (error) {
+    console.error('Error in getStaticProps:', error);
+    return { notFound: true };
+  }
 };
 
 export default ArticlePage;
