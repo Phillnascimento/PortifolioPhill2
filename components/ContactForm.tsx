@@ -87,7 +87,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         <button
           type="submit"
-          className="bg-gradient-to-r from-blue-800 to-cyan-500 hover:bg-blue-600 text-white font-medium py-3 px-5 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="bg-blue-700 hover:bg-blue-600 text-white font-medium py-3 px-5 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500"
         >
           Enviar mensagem
         </button>

@@ -15,6 +15,11 @@ export default function Index(props) {
   const [selectedTag, setSelectedTag] = useState<string>(null);
   const filteredArticles = filterArticles(articles, selectedTag);
 
+  const handleSubmit = (data: { email: string; subject: string; message: string }) => {
+    // Lógica para enviar o formulário
+    console.log(data);
+  };
+
   return (
     <Layout>
       <HeroHeader />
@@ -46,7 +51,7 @@ export default function Index(props) {
       </section>
 
       <section id="contact">
-        <ContactForm />
+        <ContactForm onSubmit={handleSubmit} />
       </section>
     </Layout>
   );
@@ -72,4 +77,4 @@ export const getStaticProps = async () => {
     },
     revalidate: 60 * 60
   };
-};
+}
