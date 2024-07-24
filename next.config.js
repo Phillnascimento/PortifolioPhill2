@@ -12,6 +12,7 @@ module.exports = {
       'cdn.hashnode.com',
       'res.craft.do',
       'res.cloudinary.com',
+      'drive.google.com',
       'nextjs-notion-blog-starter.vercel.app',
       'prod-files-secure.s3.us-west-2.amazonaws.com'
     ]
