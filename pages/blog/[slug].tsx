@@ -44,7 +44,7 @@ const ArticlePage = ({
         summary={summary}
       />
 
-      <ArticleImageSection thumbnail={thumbnail} />
+      <ArticleImageSection thumbnail={thumbnail} /> 
 
       <Container>
         <div className="max-w-3xl mx-auto mb-16 space-y-10">
@@ -57,7 +57,7 @@ const ArticlePage = ({
       <MoreArticlesSection
         title="Outros Projetos"
         linkText="Ver mais projetos"
-        linkHref="/"
+        linkHref="/#projects"  
         articles={moreArticles}
       />
     </Layout>

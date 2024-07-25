@@ -9,9 +9,9 @@ type ArticleImageSectionProps = {
 const ArticleImageSection: React.FC<ArticleImageSectionProps> = ({ thumbnail }) => {
   return (
     <Container>
-      <div className="relative w-[1200px] mx-auto overflow-hidden rounded-lg"> {/* Definido a largura fixa e arredondamento */}
+      <div className="relative w-full max-w-[1200px] mx-auto overflow-hidden rounded-lg mt-8"> {/* Adicionado mt-6 para margem superior */}
         <Image
-          className="object-contain w-full h-full" // Mantido 'object-contain' e removido 'absolute inset-0'
+          className="object-contain w-full h-auto" // Responsivo com 'object-contain' e 'w-full h-auto'
           src={thumbnail}
           placeholder="blur"
           blurDataURL={thumbnail}
