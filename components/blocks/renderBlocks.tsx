@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Image from 'next/image';
+import ImageWithModal from './ImageWithModal'; // Ajuste o caminho conforme necessário
 import Text from 'components/blocks/Text';
 import AnchorLink from 'components/blocks/AnchorLink';
 import CodeBlock from 'components/blocks/CodeBlock';
@@ -121,16 +121,10 @@ export function renderBlocks(block) {
       const caption = value.caption.length >= 1 ? value.caption[0].plain_text : '';
       return (
         <figure className="my-8">
-          <div className="relative w-full h-96 md:h-[680px] overflow-hidden rounded-lg">
-            <Image
-              className="object-cover w-full h-full rounded-lg"
-              src={src}
-              placeholder="blur"
-              blurDataURL={src}
-              layout="fill"
-              alt={caption ? caption : 'A visual depiction of what is being written about'}
-            />
-          </div>
+          <ImageWithModal
+            src={src}
+            alt={caption ? caption : 'A visual depiction of what is being written about'}
+          />
           {caption && <figcaption className="text-center mt-2">{caption}</figcaption>}
         </figure>
       );
