@@ -7,7 +7,6 @@ import getLocalizedDate from 'utils/getLocalizedDate';
 import Container from 'components/Container';
 import slugify from 'slugify';
 import siteData from 'siteData';
-import ArticleCard from 'components/ArticleCard';
 import ArticleHeader from 'components/ArticleHeader';
 import ArticleImageSection from 'components/ArticleImageSection';
 import MoreArticlesSection from 'components/MoreArticlesSection';
@@ -31,39 +30,37 @@ const ArticlePage = ({
   )}&date=${encodeURIComponent(publishedOn)}`;
 
   return (
-    <>
-      <Layout
+    <Layout
+      title={title}
+      description={summary}
+      imageUrl={ogImage}
+      date={new Date(publishedDate).toISOString()}
+      ogUrl={`/blog/${slug}`}
+    >
+      <ArticleHeader
+        publishedOn={publishedOn}
+        modifiedDate={modifiedDate}
         title={title}
-        description={summary}
-        imageUrl={ogImage}
-        date={new Date(publishedDate).toISOString()}
-        ogUrl={`/blog/${slug}`}
-      >
-        <ArticleHeader
-          publishedOn={publishedOn}
-          modifiedDate={modifiedDate}
-          title={title}
-          summary={summary}
-        />
+        summary={summary}
+      />
 
-        <ArticleImageSection thumbnail={thumbnail} />
+      <ArticleImageSection thumbnail={thumbnail} />
 
-        <Container>
-          <div className="max-w-3xl mx-auto mb-16 space-y-10">
-            {content.map(block => (
-              <Fragment key={block.id}>{renderBlocks(block)}</Fragment>
-            ))}
-          </div>
-        </Container>
+      <Container>
+        <div className="max-w-3xl mx-auto mb-16 space-y-10">
+          {content.map(block => (
+            <Fragment key={block.id}>{renderBlocks(block)}</Fragment>
+          ))}
+        </div>
+      </Container>
 
-        <MoreArticlesSection
-          title="Outros Projetos"
-          linkText="Ver mais projetos"
-          linkHref="/"
-          articles={moreArticles}
-        />
-      </Layout>
-    </>
+      <MoreArticlesSection
+        title="Outros Projetos"
+        linkText="Ver mais projetos"
+        linkHref="/"
+        articles={moreArticles}
+      />
+    </Layout>
   );
 };
 
@@ -98,7 +95,6 @@ export const getStaticPaths = async () => {
     };
   }
 };
-
 
 export const getStaticProps = async ({ params: { slug } }) => {
   try {

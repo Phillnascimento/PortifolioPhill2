@@ -10,6 +10,46 @@ export function renderBlocks(block) {
 
   switch (type) {
     case 'paragraph':
+      const hasLink = value.text.some(text => text.type === 'text' && text.text.link);
+
+      if (hasLink) {
+        const linkText = value.text.map((text, index) => {
+          if (text.type === 'text' && text.text.link) {
+            const url = text.text.link.url;
+            const isSupported = url.includes('youtube.com') || url.includes('youtu.be') || url.includes('play.google.com');
+
+            return isSupported ? (
+              <a
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 underline"
+              >
+                {text.text.content}
+              </a>
+            ) : (
+              <a
+                key={index}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 underline"
+              >
+                Acesse aqui
+              </a>
+            );
+          }
+          return (
+            <span key={index}>
+              <Text text={[text]} />
+            </span>
+          );
+        });
+
+        return <p className="leading-[28px] text-lg">{linkText}</p>;
+      }
+
       return (
         <p className="leading-[28px] text-lg">
           <Text text={value.text} />
@@ -114,16 +154,44 @@ export function renderBlocks(block) {
     case 'table_of_contents':
       return <div>TOC</div>;
     case 'video':
+      const url = value?.external?.url || '';
+      const isYouTube = url.includes('youtube.com') || url.includes('youtu.be');
+      const isGooglePlay = url.includes('play.google.com');
+
+      console.log('Video URL:', url);
+
       return (
         <div className="relative overflow-hidden">
-          <iframe
-            className="w-full h-96 md:h-[680px]"
-            src={value?.external?.url || ''}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Embedded youtube"
-          />
+          {isYouTube ? (
+            <iframe
+              className="w-full h-96 md:h-[680px]"
+              src={url.replace('watch?v=', 'embed/')}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded youtube"
+            />
+          ) : isGooglePlay ? (
+            <iframe
+              className="w-full h-96 md:h-[680px]"
+              src={url}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="Embedded Google Play"
+            />
+          ) : (
+            <p className="leading-[28px] text-lg">
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-blue-600 underline"
+              >
+                Acesse aqui
+              </a>
+            </p>
+          )}
         </div>
       );
     case 'quote':
@@ -137,8 +205,6 @@ export function renderBlocks(block) {
         <hr className="my-16 w-full border-none text-center h-10 before:content-['∿∿∿'] before:text-[#D1D5DB] before:text-2xl"></hr>
       );
     default:
-      return `❌ Unsupported block (${
-        type === 'unsupported' ? 'unsupported by Notion API' : type
-      })`;
+      return `❌ Unsupported block (${type === 'unsupported' ? 'unsupported by Notion API' : type})`;
   }
 }

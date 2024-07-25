@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { formatHashLink } from 'utils/formatHashLink';
 
 type Props = {
@@ -7,11 +7,7 @@ type Props = {
 };
 
 export default function AnchorLink({ children, text }: Props) {
-  const [hashLink, setHashLink] = useState<string>();
-
-  useEffect(() => {
-    setHashLink(formatHashLink(text));
-  }, [text]);
+  const hashLink = useMemo(() => formatHashLink(text), [text]);
 
   return (
     <div className="flex items-center justify-start space-x-2 group">
@@ -23,8 +19,14 @@ export default function AnchorLink({ children, text }: Props) {
           id={hashLink}
           href={`#${hashLink}`}
           rel="noreferrer"
+          aria-label={`Link to ${text}`}
         >
-          <svg className="hidden w-7 h-7 md:block" fill="none" viewBox="0 0 24 24">
+          <svg
+            className="hidden w-7 h-7 md:block"
+            fill="none"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path
               stroke="currentColor"
               strokeLinecap="round"
