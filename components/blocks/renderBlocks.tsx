@@ -82,7 +82,7 @@ export function renderBlocks(block) {
     case 'bulleted_list_item':
     case 'numbered_list_item':
       return (
-        <li className="text-lg">
+        <li key={id} className="text-lg mb-1"> {/* Ajustando a margem inferior */}
           <Text text={value.text} />
         </li>
       );
@@ -150,16 +150,23 @@ export function renderBlocks(block) {
     case 'video':
       const url = value?.external?.url || '';
       const isYouTube = url.includes('youtube.com') || url.includes('youtu.be');
+      const isYouTubeShort = url.includes('youtube.com/shorts/');
       const isGooglePlay = url.includes('play.google.com');
 
       console.log('Video URL:', url);
 
+      const embedUrl = isYouTubeShort
+        ? url.replace('youtube.com/shorts/', 'youtube.com/embed/')
+        : isYouTube
+        ? url.replace('watch?v=', 'embed/')
+        : url;
+
       return (
         <div className="relative overflow-hidden">
-          {isYouTube ? (
+          {isYouTube || isYouTubeShort ? (
             <iframe
               className="w-full h-96 md:h-[680px]"
-              src={url.replace('watch?v=', 'embed/')}
+              src={embedUrl}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -168,7 +175,7 @@ export function renderBlocks(block) {
           ) : isGooglePlay ? (
             <iframe
               className="w-full h-96 md:h-[680px]"
-              src={url}
+              src={embedUrl}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -186,6 +193,20 @@ export function renderBlocks(block) {
               </a>
             </p>
           )}
+        </div>
+      );
+    case 'bookmark':
+      const bookmarkUrl = value.url;
+      return (
+        <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
+          <a
+            href={bookmarkUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-600 underline"
+          >
+            {bookmarkUrl}
+          </a>
         </div>
       );
     case 'quote':

@@ -7,7 +7,7 @@ const siteData = {
   footerText: '© All rights reserved for Phill Nascimento',
   language: 'pt-br',
   locale: 'pt-BR',
-  ogBanner: 'https://nextjs-notion-blog-starter.vercel.app/preview/1.jpg',
+  ogBanner: 'https://raw.githubusercontent.com/Phillnascimento/PortifolioPhill2/main/public/image/phill.jpg',
   github: 'https://www.linkedin.com/in/phill-nascimento/',
   twitter: 'https://www.linkedin.com/in/phill-nascimento/',
   websiteUrl: 'https://nextjs-notion-blog-starter.vercel.app',
