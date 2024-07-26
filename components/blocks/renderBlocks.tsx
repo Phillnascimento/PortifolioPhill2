@@ -119,6 +119,10 @@ export function renderBlocks(block) {
     case 'image':
       const src = value.type === 'external' ? value.external.url : value.file.url;
       const caption = value.caption.length >= 1 ? value.caption[0].plain_text : '';
+
+      // Adicionando log para verificar a URL da imagem
+      console.log(`Rendering image with src: ${src}`);
+
       return (
         <figure className="my-8">
           <ImageWithModal
