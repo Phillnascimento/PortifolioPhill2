@@ -1,12 +1,16 @@
-// components/blocks/ImageWithModal.tsx
 import React, { useState } from 'react';
 import Image from 'next/image';
 
 const ImageWithModal: React.FC<{ src: string; alt: string }> = ({ src, alt }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -18,11 +22,13 @@ const ImageWithModal: React.FC<{ src: string; alt: string }> = ({ src, alt }) =>
           width={1200}
           height={800} // Ajuste conforme necessário
           className="object-contain rounded-lg"
+          placeholder="blur"
+          blurDataURL="data:image/svg+xml;base64,[base64-placeholder]" // Substitua com seu placeholder
         />
       </div>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={closeModal}>
-          <div className="relative bg-white p-4 rounded-lg">
+          <div className="relative bg-white p-4 rounded-lg max-w-full max-h-full">
             <Image
               src={src}
               alt={alt}
@@ -30,6 +36,7 @@ const ImageWithModal: React.FC<{ src: string; alt: string }> = ({ src, alt }) =>
               width={1200}
               height={800} // Ajuste conforme necessário
               className="object-contain"
+              quality={100} // Aumenta a qualidade da imagem para visualização em tela cheia
             />
             <button
               className="absolute top-2 right-2 text-white bg-gray-800 rounded-full p-2"

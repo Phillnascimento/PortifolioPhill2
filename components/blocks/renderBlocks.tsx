@@ -3,6 +3,8 @@ import ImageWithModal from './ImageWithModal'; // Ajuste o caminho conforme nece
 import Text from 'components/blocks/Text';
 import AnchorLink from 'components/blocks/AnchorLink';
 import CodeBlock from 'components/blocks/CodeBlock';
+import FigmaFileEmbed from 'components/blocks/FigmaFileEmbed';
+import FigmaPresentationEmbed from 'components/blocks/FigmaPresentationEmbed';
 
 export function renderBlocks(block) {
   const { type, id } = block;
@@ -159,7 +161,7 @@ export function renderBlocks(block) {
 
       console.log('Video URL:', url);
 
-      const embedUrl = isYouTubeShort
+      const videoEmbedUrl = isYouTubeShort
         ? url.replace('youtube.com/shorts/', 'youtube.com/embed/')
         : isYouTube
         ? url.replace('watch?v=', 'embed/')
@@ -170,7 +172,7 @@ export function renderBlocks(block) {
           {isYouTube || isYouTubeShort ? (
             <iframe
               className="w-full h-96 md:h-[680px]"
-              src={embedUrl}
+              src={videoEmbedUrl}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -179,7 +181,7 @@ export function renderBlocks(block) {
           ) : isGooglePlay ? (
             <iframe
               className="w-full h-96 md:h-[680px]"
-              src={embedUrl}
+              src={videoEmbedUrl}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -222,6 +224,31 @@ export function renderBlocks(block) {
     case 'divider':
       return (
         <hr className="my-16 w-full border-none text-center h-10 before:content-['∿∿∿'] before:text-[#D1D5DB] before:text-2xl"></hr>
+      );
+      case 'embed':
+        const embedUrl = value.url;
+        if (embedUrl.includes('figma.com/file')) {
+          return <FigmaFileEmbed key={id} url={embedUrl} />;
+        } else if (embedUrl.includes('figma.com/proto')) {
+          return <FigmaPresentationEmbed key={id} url={embedUrl} />;
+        }
+        return null;
+    case 'link_preview':
+      const linkPreviewUrl = value.url;
+      if (linkPreviewUrl.includes('figma.com')) {
+        return <FigmaPresentationEmbed key={id} url={linkPreviewUrl} />;
+      }
+      return (
+        <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
+          <a
+            href={linkPreviewUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-600 underline"
+          >
+            {linkPreviewUrl}
+          </a>
+        </div>
       );
     default:
       return `❌ Unsupported block (${type === 'unsupported' ? 'unsupported by Notion API' : type})`;
