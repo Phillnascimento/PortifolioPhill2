@@ -1,17 +1,17 @@
-import { Fragment } from 'react';
+import React from 'react';
 import { getAllArticles, getArticlePage, getArticlePageData } from 'utils/notion';
 import { Layout } from 'layouts/Layout';
-import Image from 'next/image';
 import { renderBlocks } from 'components/blocks/renderBlocks';
 import getLocalizedDate from 'utils/getLocalizedDate';
 import Container from 'components/Container';
-import slugify from 'slugify';
+import { createSlug } from 'utils/slugify';
 import siteData from 'siteData';
 import ArticleHeader from 'components/ArticleHeader';
 import ArticleImageSection from 'components/ArticleImageSection';
 import MoreArticlesSection from 'components/MoreArticlesSection';
+import { Article } from 'types/article';
 
-const ArticlePage = ({
+const ArticlePage: React.FC<Article> = ({
   content,
   title,
   thumbnail,
@@ -22,8 +22,7 @@ const ArticlePage = ({
 }) => {
   const publishedOn = getLocalizedDate(publishedDate);
   const modifiedDate = getLocalizedDate(lastEditedAt);
-
-  const slug = slugify(title).toLowerCase();
+  const slug = createSlug(title);
 
   const ogImage = `${siteData.websiteUrl}/api/og-image?title=${encodeURIComponent(
     title
@@ -49,7 +48,9 @@ const ArticlePage = ({
       <Container>
         <div className="max-w-3xl mx-auto mb-16 space-y-10">
           {content.map(block => (
-            <Fragment key={block.id}>{renderBlocks(block)}</Fragment>
+            <React.Fragment key={block.id}>
+              {renderBlocks(block)}
+            </React.Fragment>
           ))}
         </div>
       </Container>
@@ -73,10 +74,10 @@ export const getStaticPaths = async () => {
         const titleProperty = result.properties['title'];
         
         if (titleProperty?.type === 'title' && titleProperty.title.length > 0) {
+          const titleText = titleProperty.title[0].plain_text;
+          const slug = createSlug(titleText);
           return {
-            params: {
-              slug: slugify(titleProperty.title[0].plain_text).toLowerCase()
-            }
+            params: { slug }
           };
         }
       }
@@ -88,7 +89,7 @@ export const getStaticPaths = async () => {
       fallback: 'blocking'
     };
   } catch (error) {
-    console.error('Error in getStaticPaths:', error);
+    console.error('Error in getStaticPaths:', error.message, error.stack);
     return {
       paths: [],
       fallback: 'blocking'
@@ -113,7 +114,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
       revalidate: 60 * 60
     };
   } catch (error) {
-    console.error('Error in getStaticProps:', error);
+    console.error('Error in getStaticProps:', error.message, error.stack);
     return { notFound: true };
   }
 };

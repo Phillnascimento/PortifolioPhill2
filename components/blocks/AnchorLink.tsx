@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { formatHashLink } from 'utils/formatHashLink';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
   text: string;
 };
 
-export default function AnchorLink({ children, text }: Props) {
+const AnchorLink: React.FC<Props> = ({ children, text }) => {
   const hashLink = useMemo(() => formatHashLink(text), [text]);
 
   return (
@@ -53,4 +53,6 @@ export default function AnchorLink({ children, text }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default AnchorLink;
