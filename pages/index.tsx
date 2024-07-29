@@ -31,7 +31,7 @@ export default function Index(props) {
 
       <section id="projects" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-0">
         <div className="flex flex-wrap justify-center my-8 text-3xl font-bold text-gray-900">
-          {!selectedTag ? 'Meus Projetos' : `${selectedTag} articles`}
+          {!selectedTag ? 'Meus Projetos' : `Cases ${selectedTag}`}
         </div>
         <div className="flex flex-wrap justify-center gap-4 mt-8">
           {categories.map(tag => (
