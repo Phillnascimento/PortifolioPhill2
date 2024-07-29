@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { getAllArticles, getArticlePage, getArticlePageData } from 'utils/notion';
 import { Layout } from 'layouts/Layout';
+import Image from 'next/image';
 import { renderBlocks } from 'components/blocks/renderBlocks';
 import getLocalizedDate from 'utils/getLocalizedDate';
 import Container from 'components/Container';
-import { createSlug } from 'utils/slugify';
+import slugify from 'slugify';
 import siteData from 'siteData';
 import ArticleHeader from 'components/ArticleHeader';
 import ArticleImageSection from 'components/ArticleImageSection';
 import MoreArticlesSection from 'components/MoreArticlesSection';
-import { Article } from 'types/article';
+
+// Função para criar o slug a partir do título
+const createSlug = (title: string) => {
+  const words = title.split(' ').slice(0, 4).join(' ');
+  return slugify(words, {
+    lower: true,
+    remove: /[*+~.()'"!:@]/g
+  });
+};
+
+// Definindo a interface Article diretamente no arquivo
+interface Article {
+  content: any[];
+  title: string;
+  thumbnail: string;
+  publishedDate: string;
+  lastEditedAt: string;
+  summary: string;
+  moreArticles: any[];
+}
 
 const ArticlePage: React.FC<Article> = ({
   content,
@@ -22,6 +42,7 @@ const ArticlePage: React.FC<Article> = ({
 }) => {
   const publishedOn = getLocalizedDate(publishedDate);
   const modifiedDate = getLocalizedDate(lastEditedAt);
+
   const slug = createSlug(title);
 
   const ogImage = `${siteData.websiteUrl}/api/og-image?title=${encodeURIComponent(
@@ -48,9 +69,9 @@ const ArticlePage: React.FC<Article> = ({
       <Container>
         <div className="max-w-3xl mx-auto mb-16 space-y-10">
           {content.map(block => (
-            <React.Fragment key={block.id}>
+            <Fragment key={block.id}>
               {renderBlocks(block)}
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       </Container>
@@ -89,7 +110,7 @@ export const getStaticPaths = async () => {
       fallback: 'blocking'
     };
   } catch (error) {
-    console.error('Error in getStaticPaths:', error.message, error.stack);
+    console.error('Error in getStaticPaths:', error);
     return {
       paths: [],
       fallback: 'blocking'
@@ -114,7 +135,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
       revalidate: 60 * 60
     };
   } catch (error) {
-    console.error('Error in getStaticProps:', error.message, error.stack);
+    console.error('Error in getStaticProps:', error);
     return { notFound: true };
   }
 };
